@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    out = []
     data_output = []
 
     def read_file():
@@ -17,7 +16,6 @@ def main():
         edited_data = []
         for i in range(len(data)):
             edited_data.append(float(data[i]))
-        out = edited_data
         return edited_data
 
     def quantiles(n):
