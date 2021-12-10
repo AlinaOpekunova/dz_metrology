@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 def main():
     out = []
-    str_ = ''
     data_output = []
 
     def read_file():
@@ -69,12 +68,9 @@ def main():
 
         d1, d2 = quantiles(n)
 
-        global str_
         if d2 < d <= d1:
-            str_ = 'Выборка соответствует к нормальному рапределению'
             print_label(data, 1)
         else:
-            str_ = 'Выборка не соответствует к нормальному рапределению'
             print_label(data, 2)
 
     def print_label(out, choice):
@@ -105,7 +101,7 @@ def main():
                     f"рассчитанное отношение d = ", justify=LEFT, background="#FFE6A3", font="Arial 14")
     l1.config(bd=30)
     l1.grid(row=2, column=0)
-    l2 = Label(text=str_, justify=LEFT, background="#EDA3FF", font="Arial 14")
+    l2 = Label(text="", justify=LEFT, background="#EDA3FF", font="Arial 14")
     l2.config(bd=30)
     l2.grid(row=3, column=0)
 
