@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import filedialog as fd
+import matplotlib.pyplot as plt
+
 
 out = []
 str_ = ''
@@ -7,15 +9,17 @@ data_output = []
 
 
 def read_file():
+    global out
     file_name = fd.askopenfilename()
     f = open(file_name)
     data = f.read()
+    f.close()
     data = data.replace(',', '.')
     data = data.split()
     edited_data = []
     for i in range(len(data)):
         edited_data.append(float(data[i]))
-    f.close()
+    out = edited_data
     return edited_data
 
 
@@ -69,26 +73,39 @@ def calculate():
     d1, d2 = quantiles(n)
 
     if d2 < d <= d1:
-        str_ = 'Выборка принадлежит к нормальному рапределению'
+        str_ = 'Выборка соответствует к нормальному рапределению'
     else:
-        str_ = 'Выборка не принадлежит к нормальному рапределению'
+        str_ = 'Выборка не соответствует к нормальному рапределению'
 
 
 def main():
     root = Tk()
-    b2 = Button(text="Сделать расчет", command=calculate())
-    b2.grid(row=1, column=1, sticky=W)
-    l1 = Label(text=f"Результат для выборки из {data_output[0]} элементов,\n"
-                    f"смещенное среднее квадратическое значение {data_output[1]},\n"
-                    f"рассчитанное отношение d = {data_output[2]}", font="Arial 14")
-    l1.config(bd=30)
-    l1.grid(row=2, column=1)
-    l2 = Label(text=str_, font="Arial 14")
-    l2.config(bd=30)
-    l2.grid(row=3, column=1)
+    root.title("Проверка принадлежности результатов нормальному распределению с помощью составного критерия "
+               "по ГОСТ Р 8.736-2011")
+    b1 = Button(text="Сделать расчет", font="Arial 14", background="#A3A3FF", command=calculate())
+    b1.grid(row=1, column=0, sticky=(E, W))
 
+    l1 = Label(text=f"Результат для выборки из {data_output[0]} элементов:\n"
+                    f"смещенное среднее квадратическое значение {data_output[1]},\n"
+                    f"рассчитанное отношение d = {data_output[2]}", justify=LEFT, background="#FFE6A3", font="Arial 14")
+    l1.config(bd=30)
+    l1.grid(row=2, column=0)
+    l2 = Label(text=str_, justify=LEFT, background="#EDA3FF", font="Arial 14")
+    l2.config(bd=30)
+    l2.grid(row=3, column=0)
+
+    x = list(range(1, len(out) + 1))
+    fig, ax = plt.subplots(figsize=(5, 3))
+    ax.plot(x, out, marker='o')
+    ax.set_title('Данные выборки')
+    ax.set_xlim(xmin=x[0], xmax=x[-1])
+    fig.tight_layout()
+    plt.show()
     root.mainloop()
 
 
 if __name__ == '__main__':
+    out = []
+    str_ = ''
+    data_output = []
     main()
