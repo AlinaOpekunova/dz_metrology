@@ -3,6 +3,7 @@ from tkinter import filedialog as fd
 
 out = []
 
+
 def read_file():
     file_name = fd.askopenfilename()
     f = open(file_name)
@@ -10,7 +11,7 @@ def read_file():
     data = data.replace(',', '.')
     data = data.split()
     edited_data = []
-    for i in range (len(data)):
+    for i in range(len(data)):
         edited_data.append(float(data[i]))
     f.close()
     return edited_data
@@ -33,11 +34,11 @@ def quantiles(n):
         d1, d2 = 0.8508, 0.7496
     if 46 < n <= 51:
         d1, d2 = 0.8481, 0.7518
+    if (n <= 15) or (n > 51):
+        print("ERROR: n out of range:")
+        print("n = " + n)
+        exit(1)
     return d1, d2
-
-
-str_ = ''
-data_output = []
 
 
 def calculate():
@@ -73,25 +74,24 @@ def calculate():
         str_ = 'Выборка не принадлежит к нормальному рапределению'
 
 
-root = Tk()
-root.title("Проверка принадлежности результатов нормальному распределению с помощью составного критерия по ГОСТ Р 8.736-2011")
-b2 = Button(text="Сделать расчет", command=calculate())
-b2.grid(row=1, column=1, sticky=W)
-l1 = Label(text=f"Результат для выборки из {data_output[0]} элементов,\n"
-                f"смещенное среднее квадратическое значение {data_output[1]},\n"
-                f"рассчитанное отношение d = {data_output[2]}", font="Arial 14")
-l1.config(bd=30)
-l1.grid(row=2, column=1)
-l2 = Label(text=str_, font="Arial 14")
-l2.config(bd=30)
-l2.grid(row=3, column=1)
+def main():
+    str_ = ''
+    data_output = []
 
-x = list(range(1, len(out)+1))
-fig, ax = plt.subplots(figsize=(5, 3))
-ax.plot(x, out, marker='o')
-ax.set_title('Данные выборки')
-ax.set_xlim(xmin=x[0], xmax=x[-1])
-fig.tight_layout()
-plt.show()
+    root = Tk()
+    b2 = Button(text="Сделать расчет", command=calculate())
+    b2.grid(row=1, column=1, sticky=W)
+    l1 = Label(text=f"Результат для выборки из {data_output[0]} элементов,\n"
+                    f"смещенное среднее квадратическое значение {data_output[1]},\n"
+                    f"рассчитанное отношение d = {data_output[2]}", font="Arial 14")
+    l1.config(bd=30)
+    l1.grid(row=2, column=1)
+    l2 = Label(text=str_, font="Arial 14")
+    l2.config(bd=30)
+    l2.grid(row=3, column=1)
 
-root.mainloop()
+    root.mainloop()
+
+
+if __name__ == '__main__':
+    main()
