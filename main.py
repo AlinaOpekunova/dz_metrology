@@ -69,21 +69,28 @@ def main():
 
         d1, d2 = quantiles(n)
 
+        global str_
         if d2 < d <= d1:
             str_ = 'Выборка соответствует к нормальному рапределению'
+            print_label(data, 1)
         else:
             str_ = 'Выборка не соответствует к нормальному рапределению'
-        print_label(data)
+            print_label(data, 2)
 
-    def print_label(out):
+    def print_label(out, choice):
         l1.config(text=f"Результат для выборки из {data_output[0]} элементов:\n"
                        f"смещенное среднее квадратическое значение {data_output[1]},\n"
                        f"рассчитанное отношение d = {data_output[2]}", justify=LEFT, background="#FFE6A3",
                   font="Arial 14")
 
+        if choice == 1:
+            l2.config(text="Выборка соответствует к нормальному рапределению")
+        else:
+            l2.config(text="Выборка не соответствует к нормальному рапределению")
+
         x = list(range(1, len(out) + 1))
         ax.plot(x, out, marker='o')
-        ax.set_xlim(xmin=x[0], xmax=x[len(x)-1])
+        ax.set_xlim(xmin=x[0], xmax=x[len(x) - 1])
         fig.tight_layout()
         plt.show()
 
