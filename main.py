@@ -96,7 +96,8 @@ def main():
     b1.grid(row=1, column=0, sticky=(E, W))
 
     l1 = Label(text=f"Результат для выборки из элементов:\n"
-                    f"смещенное среднее квадратическое значение ,\n"
+                    f"среднее арифметическое значение: \n"
+                    f"смещенное среднее квадратическое значение: \n"
                     f"рассчитанное отношение d = ", justify=LEFT, background="#FFE6A3", font="Arial 14")
     l1.config(bd=30)
     l1.grid(row=2, column=0)
