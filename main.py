@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
+    out = []
     data_output = []
 
     def read_file():
