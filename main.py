@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    out = []
-    data_output = []
-
     def read_file():
         file_name = fd.askopenfilename()
         f = open(file_name)
@@ -46,11 +43,12 @@ def main():
         data = read_file()
         n = len(data)
         summa, sum_for_s, sum_fof_d = 0, 0, 0
-        data_output.append(str(n))
+        data_output = [str(n)]
 
         for i in range(n):
             summa += data[i]
         average_value = summa / n
+        data_output.append(str(average_value))
 
         for i in range(n):
             sum_for_s += (data[i] - average_value) ** 2
@@ -68,14 +66,15 @@ def main():
         d1, d2 = quantiles(n)
 
         if d2 < d <= d1:
-            print_label(data, 1)
+            print_label(data, data_output, 1)
         else:
-            print_label(data, 2)
+            print_label(data, data_output, 2)
 
-    def print_label(out, choice):
+    def print_label(out, data_output, choice):
         l1.config(text=f"Результат для выборки из {data_output[0]} элементов:\n"
-                       f"смещенное среднее квадратическое значение {data_output[1]},\n"
-                       f"рассчитанное отношение d = {data_output[2]}", justify=LEFT, background="#FFE6A3",
+                       f"среднее арифметическое значение {data_output[1]},\n"
+                       f"смещенное среднее квадратическое значение {data_output[2]},\n"
+                       f"рассчитанное отношение d = {data_output[3]}", justify=LEFT, background="#FFE6A3",
                   font="Arial 14")
 
         if choice == 1:
@@ -84,6 +83,7 @@ def main():
             l2.config(text="Выборка не соответствует к нормальному рапределению")
 
         x = list(range(1, len(out) + 1))
+        fig, ax = plt.subplots(figsize=(5, 3))
         ax.plot(x, out, marker='o')
         ax.set_xlim(xmin=x[0], xmax=x[len(x) - 1])
         fig.tight_layout()
@@ -100,17 +100,9 @@ def main():
                     f"рассчитанное отношение d = ", justify=LEFT, background="#FFE6A3", font="Arial 14")
     l1.config(bd=30)
     l1.grid(row=2, column=0)
-    l2 = Label(text="", justify=LEFT, background="#EDA3FF", font="Arial 14")
+    l2 = Label(text='', justify=LEFT, background="#EDA3FF", font="Arial 14")
     l2.config(bd=30)
     l2.grid(row=3, column=0)
-
-    x = list(range(1, len(out) + 1))
-    fig, ax = plt.subplots(figsize=(5, 3))
-    ax.plot(x, out, marker='o')
-    ax.set_title('Данные выборки')
-    ax.set_xlim(xmin=0, xmax=36)
-    fig.tight_layout()
-    plt.show()
 
     root.mainloop()
 
