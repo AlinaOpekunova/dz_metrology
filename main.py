@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import filedialog as fd
 
 out = []
+str_ = ''
+data_output = []
 
 
 def read_file():
@@ -42,8 +44,6 @@ def quantiles(n):
 
 
 def calculate():
-    global str_
-    global data_output
     data = read_file()
     n = len(data)
     summa, sum_for_s, sum_fof_d = 0, 0, 0
@@ -75,9 +75,6 @@ def calculate():
 
 
 def main():
-    str_ = ''
-    data_output = []
-
     root = Tk()
     b2 = Button(text="Сделать расчет", command=calculate())
     b2.grid(row=1, column=1, sticky=W)
