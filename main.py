@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog as fd
 
+out = []
 
 def read_file():
     file_name = fd.askopenfilename()
@@ -73,6 +74,7 @@ def calculate():
 
 
 root = Tk()
+root.title("Проверка принадлежности результатов нормальному распределению с помощью составного критерия по ГОСТ Р 8.736-2011")
 b2 = Button(text="Сделать расчет", command=calculate())
 b2.grid(row=1, column=1, sticky=W)
 l1 = Label(text=f"Результат для выборки из {data_output[0]} элементов,\n"
@@ -83,5 +85,13 @@ l1.grid(row=2, column=1)
 l2 = Label(text=str_, font="Arial 14")
 l2.config(bd=30)
 l2.grid(row=3, column=1)
+
+x = list(range(1, len(out)+1))
+fig, ax = plt.subplots(figsize=(5, 3))
+ax.plot(x, out, marker='o')
+ax.set_title('Данные выборки')
+ax.set_xlim(xmin=x[0], xmax=x[-1])
+fig.tight_layout()
+plt.show()
 
 root.mainloop()
